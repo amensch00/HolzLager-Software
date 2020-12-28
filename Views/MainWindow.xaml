@@ -1,0 +1,83 @@
+﻿<Window x:Class="Holzlager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Holzlager"
+		xmlns:Backend="clr-namespace:Holzlager.Backend"
+		mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1050">
+	<Grid x:Name="GRD_Main">
+		<Grid x:Name="GRD_Menu" HorizontalAlignment="Left" Height="649" Margin="10,10,0,0" VerticalAlignment="Top" Width="1022" Visibility="{Binding IsVisible}" d:IsHidden="True" d:IsLocked="True">
+			<Label Content="Holzlager Software" HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Width="500" Margin="241,0,274,0" FontSize="48" HorizontalContentAlignment="Center"/>
+			<Path Data="M83,146 L1012.0264,146" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="2" Margin="10,70,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1003.026" StrokeThickness="2"/>
+			<Button x:Name="BTN_PaketOverview" Content="Pakete übersicht" HorizontalAlignment="Left" Height="100" Margin="13,95,0,0" VerticalAlignment="Top" Width="300" FontSize="24" Command="{Binding CMD_PacketOverview}"/>
+			<Button x:Name="BTN_CreateReport" Content="Bericht erstellen" HorizontalAlignment="Left" Height="100" Margin="712,95,0,0" VerticalAlignment="Top" Width="300" FontSize="24" Command="{Binding CMD_CreateReport}"/>
+			<Button x:Name="BTN_AddPackage" Content="Pakete hinzufügen" HorizontalAlignment="Left" Height="100" Margin="10,539,0,0" VerticalAlignment="Top" Width="300" FontSize="24" Command="{Binding CMD_AddPacket}"/>
+			<Button x:Name="BTN_HolzZuschnitt" Content="Benötigter Holzzuschnitt" HorizontalAlignment="Left" Height="100" Margin="712,539,0,0" VerticalAlignment="Top" Width="300" FontSize="24" Command="{Binding CMD_Holzzuschnitt}"/>
+			<Button x:Name="BTN_Settings" Content="Einstellungen" Height="100" Margin="361,539,361,0" VerticalAlignment="Top" FontSize="24" Command="{Binding CMD_Settings}"/>
+		</Grid>
+		<Grid x:Name="GRD_Settings" HorizontalAlignment="Left" Height="649" Margin="10,10,0,0" VerticalAlignment="Top" Width="1022" Visibility="{Binding IsVisible}">
+			<Label Content="Einstellungen" HorizontalAlignment="Left" Height="51" Margin="10,10,0,0" VerticalAlignment="Top" Width="182" FontSize="24" FontWeight="Bold"/>
+
+		</Grid>
+		<Grid Name="GRD_PacketeUebersicht" Visibility="{Binding IsVisible}" d:IsLocked="True" d:IsHidden="True">
+			<DataGrid HorizontalAlignment="Left" Height="594" Margin="10,65,0,0" VerticalAlignment="Top" Width="300"/>
+			<Label Content="Packete Übersicht" HorizontalAlignment="Left" Height="50" Margin="10,10,0,0" VerticalAlignment="Top" Width="252.69" FontSize="24" FontWeight="Bold"/>
+
+			<GroupBox Header="Filter" HorizontalAlignment="Left" Height="222" Margin="532,65,0,0" VerticalAlignment="Top" Width="500" FontSize="16" d:IsLocked="True">
+				<Grid>
+					<Label Content="Jahr" HorizontalAlignment="Left" Height="30" Margin="10,10,0,0" VerticalAlignment="Top" Width="50" FontSize="12"/>
+					<Label Content="Holzlänge" HorizontalAlignment="Left" Height="30" Margin="65,10,0,0" VerticalAlignment="Top" Width="80" FontSize="12"/>
+					<Label Content="Holzdicke" HorizontalAlignment="Left" Height="30" Margin="150,10,0,0" VerticalAlignment="Top" Width="80" FontSize="12"/>
+					<Label Content="Holztyp" HorizontalAlignment="Left" Height="30" Margin="235,10,0,0" VerticalAlignment="Top" Width="80" FontSize="12"/>
+					<Label Content="Holzherkunft" HorizontalAlignment="Left" Height="30" Margin="320,10,0,0" VerticalAlignment="Top" Width="80" FontSize="12"/>
+					<ComboBox x:Name="CBX_HolzJahr" HorizontalAlignment="Left" Height="30" Margin="10,40,0,0" VerticalAlignment="Top" Width="50" FontSize="12" />
+					<ComboBox x:Name="CBX_Holzlaenge" HorizontalAlignment="Left" Height="30" Margin="65,40,0,0" VerticalAlignment="Top" Width="80" FontSize="12"/>
+					<ComboBox x:Name="CBX_Holzdicke" HorizontalAlignment="Left" Height="30" Margin="150,40,0,0" VerticalAlignment="Top" Width="80" FontSize="12"/>
+					<ComboBox x:Name="CBX_Holztyp" HorizontalAlignment="Left" Height="30" Margin="235,40,0,0" VerticalAlignment="Top" Width="80" FontSize="12"/>
+					<ComboBox x:Name="CBX_Holzherkunft" HorizontalAlignment="Left" Height="30" Margin="320,40,0,0" VerticalAlignment="Top" Width="80" FontSize="12"/>
+					<CheckBox x:Name="CKX_DeletedVisible" Content="Ausgetragene sichtbar" HorizontalAlignment="Left" Height="22" Margin="10,75,0,0" VerticalAlignment="Top" Width="220" FontSize="12" VerticalContentAlignment="Center"/>
+					<Button x:Name="BTN_ApplyFilter" Content="Filter anwenden" HorizontalAlignment="Left" Height="30" Margin="330,153.343,0,0" VerticalAlignment="Top" Width="150" FontSize="12" Command="{Binding CMD_applyFilter}"/>
+					<Button x:Name="BTN_CreateReportFromFilter" Content="Aus Filter Bericht erstellen" HorizontalAlignment="Left" Height="30" Margin="10,153.72,0,0" VerticalAlignment="Top" Width="150" FontSize="12" Command="{Binding CMD_createReportFromFilter}"/>
+				</Grid>
+			</GroupBox>
+			<Button x:Name="BTN_EditPackage" Content="Packet Verändern" HorizontalAlignment="Left" Height="40" Margin="315,65,0,0" VerticalAlignment="Top" Width="150" Command="{Binding CMD_editPackage}"/>
+			<Button x:Name="BTN_DelPackage" Content="Packet Austragen" HorizontalAlignment="Left" Height="40" Margin="315,110,0,0" VerticalAlignment="Top" Width="150" Command="{Binding CMD_delPackage}"/>
+			<Button x:Name="BTN_AddPackageFromOverview" Content="Packet hinzufügen" HorizontalAlignment="Left" Height="40" Margin="315,247,0,0" VerticalAlignment="Top" Width="150" Command="{Binding CMD_addPackage}"/>
+
+		</Grid>
+		<Grid Name="GRD_CreateReport" Visibility="{Binding IsVisible}" d:IsLocked="True" d:IsHidden="True"/>
+		<Grid Name="GRD_AddPackage" Visibility="{Binding IsVisible}" d:IsLocked="True" d:IsHidden="True">
+			<Grid.Resources>
+				<Backend:RowToPackageConverter x:Key="RowToPackageConverter"></Backend:RowToPackageConverter>
+			</Grid.Resources>
+			<DataGrid x:Name="DTG_AddPackages" HorizontalAlignment="Left" Height="594" Margin="10,65,0,0" VerticalAlignment="Top" Width="300" 
+					  ItemsSource="{Binding AddPackagesTable}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource, Converter={StaticResource RowToPackageConverter}}"/>
+			<Label Content="Packete hinzufügen" HorizontalAlignment="Left" Height="50" Margin="10,10,0,0" VerticalAlignment="Top" Width="250" FontSize="24" FontWeight="Bold"/>
+			<GroupBox Header="Eigenschaften" HorizontalAlignment="Left" Height="277" Margin="500,65,0,0" VerticalAlignment="Top" Width="532" FontSize="16" d:IsLocked="True">
+				<Grid>
+					<Label Content="Jahr" HorizontalAlignment="Left" Height="30" Margin="225,10,0,0" VerticalAlignment="Top" Width="50" FontSize="12"/>
+					<Label Content="Holzlänge" HorizontalAlignment="Left" Height="30" Margin="270,10,0,0" VerticalAlignment="Top" Width="65" FontSize="12"/>
+					<Label Content="Holzdicke" HorizontalAlignment="Left" Height="30" Margin="340,10,0,0" VerticalAlignment="Top" Width="65" FontSize="12"/>
+					<Label Content="Holztyp" HorizontalAlignment="Left" Height="30" Margin="8,10,0,0" VerticalAlignment="Top" Width="52" FontSize="12"/>
+					<Label Content="Breitenmeter" HorizontalAlignment="Left" Height="30" Margin="420,10,0,0" VerticalAlignment="Top" Width="80" FontSize="12"/>
+					<Label Content="Holzherkunft" HorizontalAlignment="Left" Height="30" Margin="140,10,0,0" VerticalAlignment="Top" Width="80" FontSize="12"/>
+					<Label Content="Packet Nr." HorizontalAlignment="Left" Height="30" Margin="65,10,0,0" VerticalAlignment="Top" Width="70" FontSize="12"/>
+					<TextBox x:Name="TBX_Holztyp" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" FontSize="12" Margin="8,40,0,0" MaxLines="1" MaxLength="5" CharacterCasing="Upper" TabIndex="1"/>
+					<TextBox x:Name="TBX_PacketNr" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" FontSize="12" Margin="65,40,0,0" MaxLines="1" MaxLength="3" CharacterCasing="Upper" TabIndex="2"/>
+					<TextBox x:Name="TBX_Holzherkunft" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="12" Margin="140,40,0,0" MaxLines="1" MaxLength="6" CharacterCasing="Upper" TabIndex="3"/>
+					<TextBox x:Name="TBX_Jahr" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontSize="12" Margin="225,40,0,0" MaxLines="1" MaxLength="4" CharacterCasing="Upper" TabIndex="4"/>
+					<TextBox x:Name="TBX_Holzlaenge" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="65" FontSize="12" Margin="270,40,0,0" MaxLines="1" MaxLength="5" CharacterCasing="Upper" TabIndex="5"/>
+					<TextBox x:Name="TBX_Holzdicke" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="65" FontSize="12" Margin="340,40,0,0" MaxLines="1" MaxLength="4" CharacterCasing="Upper" TabIndex="6"/>
+					<TextBox x:Name="TBX_Breitenmeter" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" FontSize="12" Margin="420,40,0,0" MaxLines="1" MaxLength="6" CharacterCasing="Upper" Padding="5,0,0,0" TabIndex="7"/>
+					<Button x:Name="BTN_AddPackageAdd" Content="Packet hinzufügen" HorizontalAlignment="Left" Height="50" Margin="360,188.72,0,0" VerticalAlignment="Top" Width="150" TabIndex="8"/>
+				</Grid>
+			</GroupBox>
+			<Button x:Name="BTN_FinaliseAddPackages" Content="Packete eintragen" HorizontalAlignment="Left" Height="80" Margin="852,579,0,0" VerticalAlignment="Top" Width="180" FontSize="20"/>
+			<Button x:Name="BTN_AddPacket_Edit" Content="Packet verändern" HorizontalAlignment="Left" Height="50" Margin="325,67,0,0" VerticalAlignment="Top" Width="150" FontSize="16"/>
+			<Button x:Name="BTN_AddPacket_Del" Content="Packet löschen" HorizontalAlignment="Left" Height="50" Margin="325,122,0,0" VerticalAlignment="Top" Width="150" FontSize="16"/>
+		</Grid>
+		<Grid Name="GRD_NeededHolzzuschnitt" Visibility="{Binding IsVisible}" d:IsLocked="True" d:IsHidden="True"/>
+	</Grid>
+</Window>
